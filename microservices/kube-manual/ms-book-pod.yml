@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ms-book
+spec:
+  containers:
+    - name: ms-book
+      image: yahyrparedes/ms-book
+      ports:
+        - containerPort: 3020

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template: # Aqui se define el template que va usar nuestros PODS
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          env:
+            - name: MI_VARIABLE
+              value: "variable"
+            - name: MI_OTRA_VARIABLE
+              value: "otra_variable"
+            - name: DD_AGENT_HOST # obtener la variable de entorno a base de herencia
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+          resources: # se pueden asignar recursos por contenedor y no por pod -> Si quieres puedes correr dos recursos en un pod
+            requests: # Recursos que siempre vamos a garantizar que siempre va tener disponible
+              memory: "32Mi" # Mi = Milicors = 1000 milicors = 1 core
+              cpu: "100m" #
+            limits: # Limite que el pod puede llegar a usar
+              memory: "64Mi"# quien mata el pod si se pasa de los limites es linuxno kubernetes
+              cpu: "200m" #
+          readinessProbe: # Esta listo par recibir trafico
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe: # esta vivo
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 15 # Tiempo que se demora en estar ready
+            periodSeconds: 20
+          ports:
+            - containerPort: 80
