@@ -7,4 +7,4 @@ spec:
     - name: ms-book
       image: yahyrparedes/ms-book
       ports:
-        - containerPort: 3020
+        - containerPort: 3000

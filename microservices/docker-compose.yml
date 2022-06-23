@@ -2,22 +2,20 @@ version: '3.7'
 
 services:
   author:
-    container_name: ms-author
-    build:
-      context: ./ms-author
-      dockerfile: Dockerfile
-#    image: yahyrparedes/ms-author
+#    build:
+#      context: ./ms-author
+#      dockerfile: Dockerfile
+    image: yahyrparedes/ms-author
     restart: always  
     ports:
       - 3010:3000
     networks:
       - library
   book:
-    container_name: ms-book
-    build:
-      context: ./ms-book
-      dockerfile: Dockerfile
-    #image: yahyrparedes/ms-book
+#    build:
+#      context: ./ms-book
+#      dockerfile: Dockerfile
+    image: yahyrparedes/ms-book
     restart: always
     ports:
       - 3020:3000

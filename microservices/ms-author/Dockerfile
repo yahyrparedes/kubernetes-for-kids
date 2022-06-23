@@ -7,3 +7,4 @@ RUN npm ci --only=production
 COPY . .
 
 CMD ["node", "./bin/www"]
+minikube addons enable ingress
